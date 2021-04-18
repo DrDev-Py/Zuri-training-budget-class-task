@@ -1,61 +1,83 @@
 class Budget:
+    
+    """This is a class that instantiates a budget
+       Being able to deposit into a particular budget category, 
+       withdraw from it and transfer to another budget category.
+    """
+    
+    def  __init__(self, category):
+        self.category = category
+        self.balance = 0 
 
-    # nameOfCustomer = input("What is your name? \n")
+    def deposit(self, amount):
 
-    def __init__(self, name,):
-        self.name = name
-        self.food = 0
-        self.clothing = 0
-        self.entertainment = 0
+        """deposits into a budget
+        Args:
+            "amount":
+            type = int: adds the amount to the present balance
+        """
 
-    def deposit(self):
-        amount = int(input("How much do you want to deposit? \n"))
-        category = int(input("Where do you want to deposit your money? \n 1 - food \n 2 - clothing \n 3 - entertainment \n"))
+        self.balance += amount
+        
+    def withdrawal(self, amount):
 
-        if category == 1:
-            self.food += amount
-            # print(self.food)
-        elif category == 2:
-            self.clothing += amount
-            # print(self.clothing)
-        elif category == 3:
-            self.entertainment += amount
-            # print(self.entertainment)
+        """withdraws from a budget
+        Args:
+            "amount":
+            type = int: removes the amount to the present balance
+                        returns an error if there are insufficient funds
+        """
+
+        if self.balance >= amount:
+            self.balance -= amount 
         else: 
-            print("You selected an invalid option")
+            print("insufficient funds \n withdrawal unsuccesful")
 
-            Budget.deposit(self)
+    def final_balance(self):
 
-    def withdraw(self):
-        amount = int(input("How much do you want to deposit? \n"))
-        category = int(input("Where do you want to withdraw your money from? \n 1 - food \n 2 - clothing \n 3 - entertainment \n"))
+        """returns the balance of the current category
+        """
 
-        if category == 1:
-            self.food -= amount
-            # print(self.food)
-        elif category == 2:
-            self.clothing -= amount
-            # print(self.clothing)
-        elif category == 3:
-            self.entertainment -= amount
-            # print(self.entertainment)
-        else: 
-            print("You selected an invalid option")
+        print(self.balance)
 
-            Budget.withdraw(self)
+    def transfer(self, second, amount):
 
-    def balance(self):
-        checkBalance = int(input("What category balance do you want to check? \n 1 - food \n 2 - clothing \n 3 - entertainment \n"))
+        """withdraws from the current budget,
+           and transfers the same amount to a second budget
+        Args:
+            
+            1. "second":
+            type = class: this is the second budget where the amount is deposited to.
+            2. "amount":
+            type = int: removes the amount to the present balance
+                        returns an error if there are insufficient funds
+        """
+        
+        if self.balance < amount:
+            print("Insufficient funds in donor category")
+        else:
+            self.balance -= amount
+            second.balance += amount
+        print("this is the recipient category balance ", second.balance)
+        print("this is donor category balance ", self.balance)
 
-        if checkBalance == 1:
-            return self.food
-        elif checkBalance == 2:
-            return self.clothing
-        elif checkBalance == 3:
-            return self.entertainment
-        else: 
-            print("You selected an invalid option")
-            Budget.balance(self)   
 
-newBudget = Budget('Emmanuel')
-newBudget.deposit()
+
+
+######  ATTENTION  *** Remove the docstring below to test the code ***  ######
+"""
+food = Budget("food")
+clothing = Budget("clothing")
+
+food.deposit(5000)
+clothing.deposit(1500)
+
+clothing.withdrawal(500)
+
+food.final_balance()
+clothing.final_balance()
+
+food.transfer(clothing, 10000)
+food.transfer(clothing, 1000)
+
+"""    
